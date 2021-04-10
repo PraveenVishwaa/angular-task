@@ -1,0 +1,71 @@
+<app-header></app-header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      Select Category
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="category_choose('All')">All</button>
+          <button ngbDropdownItem *ngFor="let data of products" (click)="category_choose(data!.p_category)">{{data!.p_category}}</button>
+        </div>
+      </div>
+      <div style="float: right;">
+        Cart Items:
+        {{cart.length}}
+      </div>
+    </div><br>
+    <br>
+  
+  </div>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let data of filtered">
+      <div class="card" style="width: 18rem;">
+        <img class="image_prop" style="cursor: pointer;height: 250px;width: 280px;text-align: center;" src="{{data.p_image}}" class="card-img-top" alt="..." (click)="openXl(content,data)">
+        <div class="card-body">
+          <p class="card-text">Product Name: <strong>{{data.p_name}}</strong></p>
+          <p class="card-text">Cost:<strong>{{data.p_cost | currency}}</strong></p>
+          <p class="card-text">Details:<strong>{{data.p_details}}</strong></p>
+        </div>
+        <div>
+          <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="data.req_qty"/>
+          <button class="primary" style="float: right;" (click)="addtocart(data)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Product Info</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-4">
+        <img class="image_prop" src="{{temp_data.p_image}}" class="card-img-top">
+      </div>
+      <div class="col-md-8">
+        <p class="card-text">Product Name: <strong>{{temp_data.p_name}}</strong></p>
+        <p class="card-text">Cost: <strong>{{temp_data.p_cost | currency}}</strong></p>
+        <p class="card-text">Stock Available: <strong>{{temp_data.p_availability}}</strong></p>
+        <p class="card-text">Category: <strong>{{temp_data.p_category}}</strong></p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="openXl(content)">Launch demo modal</button> -->
+
+<hr>
+
+
+<app-footer></app-footer>
